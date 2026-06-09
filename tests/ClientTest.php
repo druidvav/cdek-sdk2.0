@@ -243,10 +243,8 @@ class ClientTest extends TestCase
             . '"passport_requirements_satisfied":false},"seller":{},'
             . '"recipient":{"company":"Test Recipient","name":"Test Recipient","email":"recipient@example.com",'
             . '"phones":[{"number":"79000000002"}],"passport_requirements_satisfied":false},'
-            . '"from_location":{"code":44,"city_uuid":"11111111-1111-4111-8111-111111111111","city":"Москва",'
-            . '"country_code":"RU","country":"Россия","region":"Москва","region_code":81},'
-            . '"to_location":{"code":93,"city_uuid":"22222222-2222-4222-8222-222222222222","city":"Курган",'
-            . '"country_code":"RU","country":"Россия","region":"Курганская область","region_code":28},'
+            . '"from_location":{"code":44,"city":"Москва","country_code":"RU","region":"Москва","region_code":81},'
+            . '"to_location":{"code":93,"city":"Курган","country_code":"RU","region":"Курганская область","region_code":28},'
             . '"services":[{"code":"INSURANCE","parameter":"0.00","sum":0.00,"total_sum":0.00,'
             . '"discount_percent":0,"discount_sum":0.00,"vat_rate":5.00,"vat_sum":0.00}],'
             . '"packages":[{"number":"TEST-ORDER-001","weight":130,"length":12,"width":12,"height":9,'
@@ -272,8 +270,6 @@ class ClientTest extends TestCase
         $this->assertSame('2026-06-07', $orderResponse->entity->delivery_date);
         $this->assertSame('LEGAL_ENTITY', $orderResponse->entity->sender->contragent_type);
         $this->assertFalse($orderResponse->entity->sender->passport_requirements_satisfied);
-        $this->assertSame('Россия', $orderResponse->entity->from_location->country);
-        $this->assertSame('11111111-1111-4111-8111-111111111111', $orderResponse->entity->from_location->city_uuid);
         $this->assertSame(5.0, $orderResponse->entity->services[0]->vat_rate);
         $this->assertSame(17.25, $orderResponse->entity->delivery_detail->delivery_vat_sum);
         $this->assertSame([], $orderResponse->entity->delivery_detail->payment_info);

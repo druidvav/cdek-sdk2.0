@@ -20,13 +20,6 @@ class Location extends Base
     public $code;
 
     /**
-     * Идентификатор города
-     * @Type("string")
-     * @var string
-     */
-    public $city_uuid;
-
-    /**
      * Название района региона
      * @Type("string")
      * @var string
@@ -75,13 +68,6 @@ class Location extends Base
      * @var string
      */
     public $country_code;
-
-    /**
-     * Название страны
-     * @Type("string")
-     * @var string
-     */
-    public $country;
 
     /**
      * Название региона
