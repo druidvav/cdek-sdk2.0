@@ -43,4 +43,39 @@ class DeliveryDetail
      * @var float
      */
     public $total_sum;
+
+    /**
+     * Информация об оплате при вручении
+     * @Type("array<CdekSDK2\Dto\PaymentInfo>")
+     * @var PaymentInfo[]
+     */
+    public $payment_info;
+
+    /**
+     * Ставка НДС на доставку
+     * @Type("float")
+     * @var float
+     */
+    public $delivery_vat_rate;
+
+    /**
+     * Сумма НДС на доставку
+     * @Type("float")
+     * @var float
+     */
+    public $delivery_vat_sum;
+
+    /**
+     * Процент скидки на доставку
+     * @Type("float")
+     * @var float
+     */
+    public $delivery_discount_percent;
+
+    /**
+     * Сумма скидки на доставку
+     * @Type("float")
+     * @var float
+     */
+    public $delivery_discount_sum;
 }

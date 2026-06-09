@@ -215,4 +215,46 @@ class OrderInfo
      * @var DeliveryDetail
      */
     public $delivery_detail;
+
+    /**
+     * Признак клиентского возврата
+     * @Type("bool")
+     * @var bool
+     */
+    public $is_client_return;
+
+    /**
+     * Режим доставки (1 — дверь-дверь, 2 — дверь-склад, 3 — склад-дверь, 4 — склад-склад и т.д.)
+     * @Type("string")
+     * @var string
+     */
+    public $delivery_mode;
+
+    /**
+     * Признак наличия реверсного заказа
+     * @Type("bool")
+     * @var bool
+     */
+    public $has_reverse_order;
+
+    /**
+     * Плановая дата доставки
+     * @Type("string")
+     * @var string
+     */
+    public $planned_delivery_date;
+
+    /**
+     * Фактическая дата доставки
+     * @Type("string")
+     * @var string
+     */
+    public $delivery_date;
+
+    /**
+     * Дата, до которой заказ хранится бесплатно
+     * @Type("string")
+     * @var string
+     */
+    public $keep_free_until;
 }

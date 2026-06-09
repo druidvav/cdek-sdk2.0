@@ -33,6 +33,41 @@ class Services extends Base
      */
     public $sum;
 
+    /**
+     * Итоговая сумма услуги
+     * @Type("float")
+     * @var float
+     */
+    public $total_sum;
+
+    /**
+     * Процент скидки
+     * @Type("float")
+     * @var float
+     */
+    public $discount_percent;
+
+    /**
+     * Сумма скидки
+     * @Type("float")
+     * @var float
+     */
+    public $discount_sum;
+
+    /**
+     * Ставка НДС
+     * @Type("float")
+     * @var float
+     */
+    public $vat_rate;
+
+    /**
+     * Сумма НДС
+     * @Type("float")
+     * @var float
+     */
+    public $vat_sum;
+
     public function __construct(array $param = [])
     {
         parent::__construct($param);
