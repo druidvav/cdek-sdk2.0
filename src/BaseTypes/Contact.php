@@ -91,6 +91,21 @@ class Contact extends Base
      */
     public $tin;
 
+    /**
+     * Требования по паспортным данным удовлетворены (актуально для международных заказов)
+     * @Type("bool")
+     * @var bool
+     */
+    public $passport_requirements_satisfied;
+
+    /**
+     * Тип контрагента (LEGAL_ENTITY — юридическое лицо, INDIVIDUAL — физическое лицо)
+     * @SkipWhenEmpty()
+     * @Type("string")
+     * @var string
+     */
+    public $contragent_type;
+
 
     /**
      * Contact constructor.

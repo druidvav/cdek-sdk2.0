@@ -229,4 +229,49 @@ class ClientTest extends TestCase
         $response->method('isOk')->willReturn(true);
         $this->client->formatResponseList($response, 'AnotherClass');
     }
+
+    public function testFormatResponseOrderInfo()
+    {
+        $response = $this->createMock(ApiResponse::class);
+        $response->method('getBody')
+            ->willReturn('{"entity":{"uuid":"00000000-0000-4000-8000-000000000001","type":1,"is_return":false,'
+            . '"is_reverse":false,"cdek_number":"10000000001","number":"TEST-ORDER-001","tariff_code":136,'
+            . '"delivery_point":"KUR58","items_cost_currency":"RUB","recipient_currency":"RUB",'
+            . '"keep_free_until":"2026-06-14T18:59:59Z","delivery_recipient_cost":{"value":0.0,"vat_sum":0.0},'
+            . '"sender":{"company":"Test Sender LLC","name":"Test Sender LLC",'
+            . '"contragent_type":"LEGAL_ENTITY","phones":[{"number":"79000000001"}],'
+            . '"passport_requirements_satisfied":false},"seller":{},'
+            . '"recipient":{"company":"Test Recipient","name":"Test Recipient","email":"recipient@example.com",'
+            . '"phones":[{"number":"79000000002"}],"passport_requirements_satisfied":false},'
+            . '"from_location":{"code":44,"city":"Москва","country_code":"RU","region":"Москва","region_code":81},'
+            . '"to_location":{"code":93,"city":"Курган","country_code":"RU","region":"Курганская область","region_code":28},'
+            . '"services":[{"code":"INSURANCE","parameter":"0.00","sum":0.00,"total_sum":0.00,'
+            . '"discount_percent":0,"discount_sum":0.00,"vat_rate":5.00,"vat_sum":0.00}],'
+            . '"packages":[{"number":"TEST-ORDER-001","weight":130,"length":12,"width":12,"height":9,'
+            . '"items":[{"name":"товарное вложение","ware_key":"GOODS","payment":{"value":0.0,"vat_sum":0.0},'
+            . '"weight":130,"amount":1,"cost":0.0}]}],'
+            . '"statuses":[{"code":"DELIVERED","name":"Вручен","date_time":"2026-06-07T10:13:53+0000",'
+            . '"deleted":false}],"is_client_return":false,"delivery_mode":"4","has_reverse_order":false,'
+            . '"planned_delivery_date":"2026-06-06","delivery_date":"2026-06-07",'
+            . '"delivery_detail":{"date":"2026-06-07","recipient_name":"Test Recipient","payment_sum":0.00,'
+            . '"delivery_sum":345.00,"total_sum":362.25,"payment_info":[],"delivery_vat_rate":5.00,'
+            . '"delivery_vat_sum":17.25,"delivery_discount_percent":0,"delivery_discount_sum":0.00},'
+            . '"calls":{}},"requests":[],"related_entities":[]}');
+        $response->method('isOk')->willReturn(true);
+
+        $orderResponse = $this->client->formatResponse($response, OrderInfo::class);
+
+        $this->assertInstanceOf(OrderInfo::class, $orderResponse->entity);
+        $this->assertSame('00000000-0000-4000-8000-000000000001', $orderResponse->entity->uuid);
+        $this->assertSame('2026-06-14T18:59:59Z', $orderResponse->entity->keep_free_until);
+        $this->assertFalse($orderResponse->entity->is_client_return);
+        $this->assertSame('4', $orderResponse->entity->delivery_mode);
+        $this->assertSame('2026-06-06', $orderResponse->entity->planned_delivery_date);
+        $this->assertSame('2026-06-07', $orderResponse->entity->delivery_date);
+        $this->assertSame('LEGAL_ENTITY', $orderResponse->entity->sender->contragent_type);
+        $this->assertFalse($orderResponse->entity->sender->passport_requirements_satisfied);
+        $this->assertSame(5.0, $orderResponse->entity->services[0]->vat_rate);
+        $this->assertSame(17.25, $orderResponse->entity->delivery_detail->delivery_vat_sum);
+        $this->assertSame([], $orderResponse->entity->delivery_detail->payment_info);
+    }
 }
